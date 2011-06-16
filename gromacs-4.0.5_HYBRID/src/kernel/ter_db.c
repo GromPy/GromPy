@@ -1,0 +1,374 @@
+/*
+ * $Id: ter_db.c,v 1.26.2.1 2009/01/18 23:06:26 lindahl Exp $
+ * 
+ *                This source code is part of
+ * 
+ *                 G   R   O   M   A   C   S
+ * 
+ *          GROningen MAchine for Chemical Simulations
+ * 
+ *                        VERSION 3.2.0
+ * Written by David van der Spoel, Erik Lindahl, Berk Hess, and others.
+ * Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+ * Copyright (c) 2001-2004, The GROMACS development team,
+ * check out http://www.gromacs.org for more information.
+
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * If you want to redistribute modifications, please consider that
+ * scientific software is very special. Version control is crucial -
+ * bugs must be traceable. We will be happy to consider code for
+ * inclusion in the official distribution, but derived work must not
+ * be called official GROMACS. Details are found in the README & COPYING
+ * files - if they are missing, get the official version at www.gromacs.org.
+ * 
+ * To help us fund GROMACS development, we humbly ask that you cite
+ * the papers on the package - you can find them in the top README file.
+ * 
+ * For more info, check our website at http://www.gromacs.org
+ * 
+ * And Hey:
+ * Gallium Rubidium Oxygen Manganese Argon Carbon Silicon
+ */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include "sysstuff.h"
+#include "smalloc.h"
+#include "typedefs.h"
+#include "symtab.h"
+#include "futil.h"
+#include "resall.h"
+#include "h_db.h"
+#include "string2.h"
+#include "strdb.h"
+#include "gmx_fatal.h"
+#include "ter_db.h"
+#include "toputil.h"
+#include "gmxfio.h"
+
+
+/* use bonded types definitions in hackblock.h */
+#define ekwRepl ebtsNR+1
+#define ekwAdd  ebtsNR+2
+#define ekwDel  ebtsNR+3
+#define ekwNR   3
+char *kw_names[ekwNR] = {
+  "replace", "add", "delete" 
+};
+
+int find_kw(char *keyw)
+{
+  int i;
+  
+  for(i=0; i<ebtsNR; i++)
+    if (strcasecmp(btsNames[i],keyw) == 0)
+      return i;
+  for(i=0; i<ekwNR; i++)
+    if (strcasecmp(kw_names[i],keyw) == 0)
+      return ebtsNR + 1 + i;
+  
+  return NOTSET;
+}
+
+#define FATAL() gmx_fatal(FARGS,"Reading Termini Database: not enough items on line\n%s",line)
+
+static void read_atom(char *line, t_atom *a, t_atomtype atype, int *cgnr)
+{
+  int    i, n;
+  char   type[12];
+  double m, q;
+  
+  if ( (i=sscanf(line,"%s%lf%lf%n", type, &m, &q, &n)) != 3 ) 
+    gmx_fatal(FARGS,"Reading Termini Database: expected %d items of atom data in stead of %d on line\n%s", 3, i, line);
+  a->m=m;
+  a->q=q;
+  a->type=get_atomtype_type(type,atype);
+  if ( sscanf(line+n,"%d", cgnr) != 1 )
+    *cgnr = NOTSET;
+}
+
+static void print_atom(FILE *out,t_atom *a,t_atomtype atype,char *newnm)
+{
+  fprintf(out,"\t%s\t%g\t%g\n",
+	  get_atomtype_name(a->type,atype),a->m,a->q);
+}
+
+static void print_ter_db(char *ff,char C,int nb,t_hackblock tb[],t_atomtype atype) 
+{
+  FILE *out;
+  int i,j,k,bt,nrepl,nadd,ndel;
+  char buf[STRLEN],nname[STRLEN];
+  
+  sprintf(buf,"%s-%c_new.tdb",ff,C);
+  out = gmx_fio_fopen(buf,"w");
+  
+  for(i=0; (i<nb); i++) {
+    fprintf(out,"[ %s ]\n",tb[i].name);
+    
+    /* first count: */
+    nrepl=0;
+    nadd=0;
+    ndel=0;
+    for(j=0; j<tb[i].nhack; j++) 
+      if ( tb[i].hack[j].oname!=NULL && tb[i].hack[j].nname!=NULL )
+	nrepl++;
+      else if ( tb[i].hack[j].oname==NULL && tb[i].hack[j].nname!=NULL )
+	nadd++;
+      else if ( tb[i].hack[j].oname!=NULL && tb[i].hack[j].nname==NULL )
+	ndel++;
+      else if ( tb[i].hack[j].oname==NULL && tb[i].hack[j].nname==NULL )
+	gmx_fatal(FARGS,"invalid hack (%s) in termini database",tb[i].name);
+    if (nrepl) {
+      fprintf(out,"[ %s ]\n",kw_names[ekwRepl-ebtsNR-1]);
+      for(j=0; j<tb[i].nhack; j++) 
+	if ( tb[i].hack[j].oname!=NULL && tb[i].hack[j].nname!=NULL ) {
+	  fprintf(out,"%s\t",tb[i].hack[j].oname);
+	  print_atom(out,tb[i].hack[j].atom,atype,tb[i].hack[j].nname);
+	}
+    }
+    if (nadd) {
+      fprintf(out,"[ %s ]\n",kw_names[ekwAdd-ebtsNR-1]);
+      for(j=0; j<tb[i].nhack; j++) 
+	if ( tb[i].hack[j].oname==NULL && tb[i].hack[j].nname!=NULL ) {
+	  print_ab(out,&(tb[i].hack[j]),tb[i].hack[j].nname);
+	  print_atom(out,tb[i].hack[j].atom,atype,tb[i].hack[j].nname);
+	}
+    }
+    if (ndel) {
+      fprintf(out,"[ %s ]\n",kw_names[ekwDel-ebtsNR-1]);
+      for(j=0; j<tb[i].nhack; j++)
+	if ( tb[i].hack[j].oname!=NULL && tb[i].hack[j].nname==NULL )
+	  fprintf(out,"%s\n",tb[i].hack[j].oname);
+    }
+    for(bt=0; bt<ebtsNR; bt++)
+      if (tb[i].rb[bt].nb) {
+	fprintf(out,"[ %s ]\n", btsNames[bt]);
+	for(j=0; j<tb[i].rb[bt].nb; j++) {
+	  for(k=0; k<btsNiatoms[bt]; k++) 
+	    fprintf(out,"%s%s",k?"\t":"",tb[i].rb[bt].b[j].a[k]);
+	  if ( tb[i].rb[bt].b[j].s )
+	    fprintf(out,"\t%s",tb[i].rb[bt].b[j].s);
+	  fprintf(out,"\n");
+	}
+      }
+    fprintf(out,"\n");
+  }
+  gmx_fio_fclose(out);
+}
+
+int read_ter_db(char *FF,char ter,t_hackblock **tbptr,t_atomtype atype)
+{
+  FILE       *in;
+  char       inf[STRLEN],header[STRLEN],buf[STRLEN],line[STRLEN];
+ t_hackblock *tb;
+  int        i,j,n,ni,kwnr,nb,maxnb,nh;
+  
+  sprintf(inf,"%s-%c.tdb",FF,ter);
+  in=libopen(inf);
+  if (debug)
+    fprintf(debug,"Opened %s\n",inf);
+  
+  tb=NULL;
+  nb=-1;
+  maxnb=0;
+  kwnr=NOTSET;
+  get_a_line(in,line,STRLEN);
+  while (!feof(in)) {
+    if (get_header(line,header)) {
+      /* this is a new block, or a new keyword */
+      kwnr=find_kw(header);
+      
+      if (kwnr == NOTSET) {
+	nb++;
+	/* here starts a new block */
+	if ( nb >= maxnb ) {
+	  maxnb+=100;
+	  srenew(tb,maxnb);
+	}
+	clear_t_hackblock(&tb[nb]);
+	tb[nb].name=strdup(header);
+      }
+    } else {
+      if (nb < 0)
+	gmx_fatal(FARGS,"reading termini database: "
+		    "directive expected before line:\n%s\n"
+		    "This might be a file in an old format.",line);
+      /* this is not a header, so it must be data */
+      if (kwnr >= ebtsNR) {
+	/* this is a hack: add/rename/delete atoms */
+	/* make space for hacks */
+	if (tb[nb].nhack >= tb[nb].maxhack) {
+	  tb[nb].maxhack+=10;
+	  srenew(tb[nb].hack, tb[nb].maxhack);
+	}
+	nh=tb[nb].nhack;
+	clear_t_hack(&(tb[nb].hack[nh]));
+	for(i=0; i<4; i++)
+	  tb[nb].hack[nh].a[i]=NULL;
+	tb[nb].nhack++;
+	
+	/* get data */
+	n=0;
+	if ( kwnr==ekwRepl || kwnr==ekwDel ) {
+	  if (sscanf(line, "%s%n", buf, &n) != 1) 
+	    gmx_fatal(FARGS,"Reading Termini Database: "
+			"expected atom name on line\n%s",line);
+	  tb[nb].hack[nh].oname = strdup(buf);
+	  /* we only replace or delete one atom at a time */
+	  tb[nb].hack[nh].nr = 1;
+	} else if ( kwnr==ekwAdd ) {
+	  read_ab(line, inf, &(tb[nb].hack[nh]));
+	  get_a_line(in, line, STRLEN);
+	} else
+	  gmx_fatal(FARGS,"unimplemented keyword number %d (%s:%d)",
+		      kwnr,__FILE__,__LINE__);
+	if ( kwnr==ekwRepl || kwnr==ekwAdd ) {
+	  snew(tb[nb].hack[nh].atom, 1);
+	  read_atom(line+n, tb[nb].hack[nh].atom, atype, 
+		    &tb[nb].hack[nh].cgnr);
+	  if (!tb[nb].hack[nh].nname) {
+	    if (tb[nb].hack[nh].oname)
+	      tb[nb].hack[nh].nname = strdup(tb[nb].hack[nh].oname);
+	    else
+	      gmx_fatal(FARGS,"Don't know which name the new atom should have");
+	    }
+	}
+      } else if (kwnr >= 0 && kwnr < ebtsNR) {
+	/* this is bonded data: bonds, angles, dihedrals or impropers */
+	srenew(tb[nb].rb[kwnr].b,tb[nb].rb[kwnr].nb+1);
+	n=0;
+	for(j=0; j<btsNiatoms[kwnr]; j++) {
+	  if ( sscanf(line+n, "%s%n", buf, &ni) == 1 )
+	    tb[nb].rb[kwnr].b[tb[nb].rb[kwnr].nb].a[j] = strdup(buf);
+	  else
+	    gmx_fatal(FARGS,"Reading Termini Database: expected %d atom names (found %d) on line\n%s", btsNiatoms[kwnr], j-1, line);
+	  n+=ni;
+	}
+	for(   ; j<MAXATOMLIST; j++)
+	  tb[nb].rb[kwnr].b[tb[nb].rb[kwnr].nb].a[j] = NULL;
+	strcpy(buf, "");
+	sscanf(line+n, "%s", buf);
+	tb[nb].rb[kwnr].b[tb[nb].rb[kwnr].nb].s = strdup(buf);
+	tb[nb].rb[kwnr].nb++;
+      } else
+	gmx_fatal(FARGS,"Reading Termini Database: Expecting a header at line\n"
+		    "%s",line);
+    }
+    get_a_line(in,line,STRLEN);
+  }
+  nb++;
+  srenew(tb,nb);
+  
+  fclose(in);
+  
+  if (debug) 
+    print_ter_db(FF,ter,nb,tb,atype);
+  
+  *tbptr=tb;
+  return nb;
+}
+
+t_hackblock **filter_ter(int nb,t_hackblock tb[],char *resname,int *nret)
+{
+  /* Since some force fields (e.g. OPLS) needs different
+   * atomtypes for different residues there could be a lot
+   * of entries in the databases for specific residues
+   * (e.g. GLY-NH3+, SER-NH3+, ALA-NH3+).
+   * 
+   * To reduce the database size, we assume that a terminus specifier liker
+   *
+   * [ GLY|SER|ALA-NH3+ ]
+   *
+   * would cover all of the three residue types above. 
+   * Wildcards (*,?) are not OK. Don't worry about e.g. GLU vs. GLUH since 
+   * pdb2gmx only uses the first 3 letters when calling this routine.
+   * 
+   * To automate this, this routines scans a list of termini 
+   * for the residue name "resname" and returns an allocated list of 
+   * pointers to the termini that could be applied to the 
+   * residue in question. The variable pointed to by nret will
+   * contain the number of valid pointers in the list.
+   * Remember to free the list when you are done with it...
+   */ 
+
+  int i,j,n,len,none_idx;
+  bool found;
+  char *s,*s2,*c;
+  t_hackblock **list;
+  
+  n=0;
+  list=NULL;
+  
+  for(i=0;i<nb;i++) {
+    s=tb[i].name;
+    found=FALSE;
+    do {
+      if(!strncasecmp(resname,s,3)) {
+	found=TRUE;
+	srenew(list,n+1);
+	list[n]=&(tb[i]);
+	n++;
+      } else { /* advance to next |-separated field */
+	s=strchr(s,'|');
+	if(s!=NULL)
+	  s++;
+      }
+    } while(!found && s!=NULL);
+  }
+      
+  /* All residue-specific termini have been added. See if there
+   * are some generic ones by searching for the occurence of
+   * '-' in the name prior to the last position (which indicates charge).
+   * The [ None ] alternative is special since we don't want that
+   * to be the default, so we put it last in the list we return.
+   */
+  none_idx=-1;
+  for(i=0;i<nb;i++) {
+    s=tb[i].name;
+    if(!strcasecmp("None",s)) {
+      none_idx=i;
+    } else {
+      c=strchr(s,'-');
+      if(c==NULL || ((c-s+1)==strlen(s))) {
+	/* Check that we haven't already added a residue-specific version 
+	 * of this terminus.
+	 */
+	for(j=0;j<n && strstr((*list[j]).name,s)==NULL;j++);
+	if(j==n) {
+	  srenew(list,n+1);
+	  list[n]=&(tb[i]);
+	  n++;
+	}
+      }
+    }
+  } 
+  if(none_idx>=0) {
+    srenew(list,n+1);
+    list[n]=&(tb[none_idx]);
+    n++;
+  }    
+
+  *nret=n;
+  return list;
+}
+
+
+t_hackblock *choose_ter(int nb,t_hackblock **tb,char *title)
+{
+  int i,sel,ret;
+  
+  printf("%s\n",title);
+  for(i=0; (i<nb); i++) 
+    printf("%2d: %s\n",i,(*tb[i]).name);
+  do {
+    ret=fscanf(stdin,"%d",&sel);
+  } while ((ret != 1) || (sel < 0) || (sel >= nb));
+  
+  return tb[sel];
+}
+

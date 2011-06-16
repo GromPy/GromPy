@@ -1,0 +1,43 @@
+<title>ndx file format</title>
+<LINK rel=stylesheet href="style.css" type="text/css">
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#650065" alink="#FF0000">
+<h2>ndx file format</h2>
+<CENTER><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 COLS=2 WIDTH="98%">
+<TR>
+<TD><font size=-1><A HREF="../online.html">Main Table of Contents</A></font></TD>
+<TD ALIGN=RIGHT><B>VERSION 4.0</B></TR>
+<TR><TD><font size=-1><A HREF="http://www.gromacs.org">GROMACS homepage</A></font></TD>
+<TD ALIGN=RIGHT><B>Sun 18 Jan 2009</B></TR></TABLE></CENTER><HR>
+<H3>Description</H3>
+The GROMACS index file (usually called index.ndx) contains some
+user definable sets of atoms. The file can be read by
+most analysis programs, by the graphics program (<a href=ngmx.html>ngmx</a>) 
+and by the preprocessor (<a href=grompp.html>grompp</a>).
+Most of these programs create default index groups when no index
+file is supplied, so you only need to make an index file when you need special
+groups.
+<p>
+First the group name is written between square brackets.
+The following atom numbers may be spread out over as many lines as you like.
+The atom numbering starts at 1.
+<p>
+
+An example file is here:
+<pre>
+[ Oxygen ]
+1 	4 	7 
+[ Hydrogen ]
+2	3	5	6
+8	9
+</pre>
+
+There are two groups, and total nine atoms. The first group
+<b>Oxygen</b> has 3 elements.
+The second group <b>Hydrogen</b> has 6 elements.
+<p>
+An index file generation tool is available: <a href=make_ndx.html>make_ndx</a>.
+<hr>
+<div ALIGN=RIGHT>
+<font size="-1"><a href="http://www.gromacs.org">http://www.gromacs.org</a></font><br>
+</div>
+</body>

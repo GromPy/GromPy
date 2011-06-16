@@ -1,0 +1,326 @@
+<HTML>
+<HEAD>
+<TITLE>Getting started</TITLE>
+<LINK rel=stylesheet href="style.css" type="text/css">
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#990000" alink="#FF0000">
+<TABLE WIDTH="98%" NOBORDER >
+<TR><TD WIDTH=400>
+<TABLE WIDTH=400 NOBORDER>
+<TD WIDTH=116>
+<a href="http://www.gromacs.org/"><img SRC="../images/gmxlogo_small.jpg"BORDER=0 height=133 width=116></a></td>
+<td ALIGN=LEFT VALIGN=TOP WIDTH=280><br><h2>Getting started</h2><font size=-1><A HREF="../online.html">Main Table of Contents</A></font><br><br></td>
+</TABLE></TD><TD WIDTH="*" ALIGN=RIGHT VALIGN=BOTTOM><p><B>VERSION 4.0<br>
+Sun 18 Jan 2009</B></td></tr></TABLE>
+<HR>
+<H3>Contents</H3>
+
+<ul>
+<li><a href="#start">Introduction</a>
+<ul>
+	<li><a href="#setup">Setting up your environment</a>
+	<li><a href="#examples">Examples</a>
+</ul>
+<li><a href="gmxdemo.html">The GROMACS demo</a>
+<li><a href="water.html">Water</a>
+<li><a href="methanol.html">Methanol</a>
+<li><a href="mixed.html">Water/Methanol mixture</a>
+<li><a href="speptide.html">Ribonuclease S-Peptide</a>
+<li><a href="protunf.html">Protein unfolding</a>
+<li><a href="#files">GROMACS files</a>
+<ul>
+	<li><a href="#top">Molecular topology file</a>
+	<li><a href="#gro">Molecular structure file</a>
+	<li><a href="#mdp">Molecular dynamics parameter file</a>
+	<li><a href="#ndx">Index file</a>
+	<li><a href="#tpr">Run input file</a>
+	<li><a href="#trx">Trajectory file</a>
+</ul>
+<li><a href="#ref">References</a>
+</ul>
+
+<P>
+More info can be found in the 
+<A HREF="flow.html">flowchart</A> 
+(for a quick overview) and the 
+<A HREF="../gmxfaq.html">GMX FAQ</A>.
+</P>
+
+<br><hr><br>
+
+<a name="start"><H2>Introduction</A></H2>
+<p>
+In this chapter we assume the reader is familiar with Molecular
+Dynamics and familiar with Unix, including the use of a text editor
+such as <tt>jot</tt>, <tt>emacs</tt> or <tt>vi</tt>. We furthermore assume the
+GROMACS software is installed properly on your system. When you see a line
+like</p>
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=8 COLS=3 WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td WIDTH="2%" NOSAVE><font color="#000000"></font></td>
+<td WIDTH="80%" BGCOLOR="#000066" NOSAVE><font color="#FFFFFF">
+
+<tt> ls -l
+</tt>
+<td></td>
+</tr>
+</table>
+<br>
+you are supposed to type the contents of that line on your computer.
+
+<H3><A NAME="setup">Setting up your environment</A></H3>
+<p>
+In order to check whether you have access to the GROMACS software, please
+start by entering the command:
+</p>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=8 COLS=3 WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td WIDTH="2%" NOSAVE><font color="#000000"></font></td>
+<td WIDTH="80%" BGCOLOR="#000066" NOSAVE><font color="#FFFFFF">
+
+<tt> luck
+</tt>
+<td></td>
+</tr>
+</table>
+<br>
+This command should return a cool quote like:
+<pre>
+"Whatever Happened to Pong ?" (F. Black)
+</pre>
+
+If this, in contrast, returns the phrase
+<pre>
+luck: command not found.
+</pre>
+
+then you have to verify where your version of GROMACS is installed.
+
+In the default case, the binaries are located in
+'/usr/local/gromacs/&lt;arch&gt;/bin', where &lt;arch&gt; is the
+architecture of your computer. However, you can ask your local system
+administrator for more information.  If we assume that GROMACS is
+installed in directory <tt>XXX</tt> and your machine architecture is
+<tt>sgi</tt> you would find the executables (programs) in
+<tt>XXX/sgi/bin</tt>.  To be able to access the programs without
+problems, you will have to edit the login file for your shell. If you
+use the C shell, this file is called <TT>.cshrc</TT> or
+<TT>.tcshrc</TT>, and it is located in your home directory. Add a line
+like:
+
+<br><br>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=8 COLS=3 WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td WIDTH="2%" NOSAVE><font color="#000000"></font></td>
+<td WIDTH="80%" BGCOLOR="#000066" NOSAVE><font color="#FFFFFF">
+<tt> 
+setenv PATH "XXX/&lt;arch&gt;/bin:${PATH}".
+</tt>
+<td></td>
+</tr>
+</table>
+<br>
+
+Issue this command at the prompt too, or log off and on again to
+automatically get the environment.
+
+<P><H3><A NAME="examples">Examples</A></H3>
+Before starting the examples, you have to copy all the neccesary
+files, to your own directory. Chdir to the directory you want to put
+the examples directory. This directory (named <tt>tutor</tt>) 
+will need
+about 20 MB of disk space, when it is completely filled.<br><br>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=8 COLS=3 WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td WIDTH="2%" NOSAVE><font color="#000000"></font></td>
+<td WIDTH="80%" BGCOLOR="#000066" NOSAVE><font color="#FFFFFF">
+
+<tt> cd "your own directory"
+</tt>
+<td></td>
+</tr>
+</table>
+<br> 
+then copy the examples: <br><br>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=8 COLS=3 WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td WIDTH="2%" NOSAVE><font color="#000000"></font></td>
+<td WIDTH="80%" BGCOLOR="#000066" NOSAVE><font color="#FFFFFF">
+
+<tt> cp -r XXX/share/tutor .
+</tt>
+<td></td>
+</tr>
+</table>
+<br>
+(NOTE: include the "<TT>.</TT>", and replace <tt>XXX</tt> by the real directory)<br>
+If that directory doesn't exist you could look for the files
+in <tt>/usr/local/share/gromacs/tutor</tt>, or ask your local GROMACS expert.
+<br> You now have a subdirectory
+<tt>tutor</tt>. Move there<br><br>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=8 COLS=3 WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td WIDTH="2%" NOSAVE><font color="#000000"></font></td>
+<td WIDTH="80%" BGCOLOR="#000066" NOSAVE><font color="#FFFFFF">
+
+<tt>  cd tutor
+ </tt>
+<td></td>
+</tr>
+</table>
+<br>
+and view the contents of this directory
+<br><br>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=8 COLS=3 WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td WIDTH="2%" NOSAVE><font color="#000000"></font></td>
+<td WIDTH="80%" BGCOLOR="#000066" NOSAVE><font color="#FFFFFF">
+
+<tt> ls -l
+</tt>
+<td></td>
+</tr>
+</table>
+<br>
+If all is well you will have seven subdirectories with examples 
+with names like <tt>gmxdemo</tt>, <tt>methanol</tt>, 
+<tt>mixed</tt>, <tt>nmr1</tt>, <tt>nmr2</tt>, 
+<tt>speptide</tt> and <tt>water</tt>.
+<P>
+You are encouraged to look up the different programs and
+file formats in <a href="../online.html">
+the online manual</a> while you are browsing through the examples.</p>
+
+<b>While going through the tutorial you will find questions 
+(<font color="red">in a red font</font>). Try to answer them, to increase
+your understanding of molecular simulation.</b>
+
+
+
+<a href="gmxdemo.html"><h3>Go to the first step</h3></a>
+
+<br><hr><br>
+<H2><A NAME="files">GROMACS files</A></h2>
+Here is an overview of the most important GROMACS file types that you will
+encounter during the tutorial.
+<DL>
+<DT>
+<h3><A NAME="top">Molecular Topology file (<TT><a href="top.html">.top</a></TT>)</A></h3>
+<DD>
+The molecular topology file is generated by the program <TT>
+<a href="pdb2gmx.html">pdb2gmx</a></TT>. <a href="pdb2gmx.html">pdb2gmx</a> translates a <a href="pdb.html">pdb</a> structure file of any peptide
+or protein
+to a molecular topology file. This topology file contains a complete
+description of all the interactions in your peptide or protein.
+<P></P>
+	
+<DT>
+<h3><A NAME="gro">Molecular Structure file (<TT><a href="gro.html">.gro</a></TT>, <TT><a href="pdb.html">.pdb</a></TT>)</A></h3>
+<DD>
+When the <a href="pdb2gmx.html">pdb2gmx</a> program is executed to generate a molecular
+topology, it also translates the structure file (<TT><a href="pdb.html">.pdb</a></TT> file) 
+to a gromos
+structure file (<TT><a href="gro.html">.gro</a></TT> file). The main difference between a 
+<a href="pdb.html">pdb</a> file and a gromos file is their format and that
+a <TT><a href="gro.html">.gro</a></TT> file can also hold velocities. However, if you do not need the
+velocities, you can also use a <a href="pdb.html">pdb</a> file in all programs.
+To generate a box of solvent molecules
+around the peptide, the program 
+<a href="genbox.html">genbox</a> is used. First the program
+<a href="editconf.html">editconf</a> should be used to
+define a box of appropriate size around the molecule.
+<a href="genbox.html">genbox</a>
+dissolves a solute molecule (the peptide) into any solvent (in this
+case water). The output of <TT><a href="genbox.html">genbox</a></TT> is a gromos structure file of
+the peptide dissolved in water. The <a href="genbox.html">genbox</a> program also changes the
+molecular topology file (generated by <a href="pdb2gmx.html">pdb2gmx</a>) to add solvent
+to the topology. 
+<P></P>
+
+<DT>
+<h3><A NAME="mdp">Molecular Dynamics parameter file (<TT><a href="mdp_opt.html">.mdp</a></TT>)</A></h3>
+<DD>
+The Molecular Dynamics Parameter (<TT><a href="mdp_opt.html">.mdp</a></TT>) file contains all
+information about the Molecular Dynamics simulation itself 
+e.g. time-step, number of steps, temperature, pressure etc. The
+easiest way of handling such a file is by adapting a sample <TT><a href="mdp_opt.html">.mdp</a></TT>
+file. A <TT><a href="mdp.html">sample mdp file</a></TT>
+can be found online.
+<P></P>
+
+<DT>
+<h3><A NAME="ndx">Index file (<TT><a href="ndx.html">.ndx</a></TT>)</A></h3>
+<DD>
+Sometimes you may need an index file to specify actions on groups of atoms
+(e.g. Temperature coupling, accelerations, freezing). Usually the default index
+groups will be sufficient, so for this demo we will
+not consider the use of index files.
+<P></P>
+
+<DT>
+<h3><A NAME="tpr">Run input file (<TT><a href="tpr.html">.tpr</a></TT>)</A></h3>
+<DD>
+The next step is to combine the molecular structure (<TT><a href="gro.html">.gro</a></TT> file),
+topology (<TT><a href="top.html">.top</a></TT> file) MD-parameters (<TT><a href="mdp_opt.html">.mdp</a></TT> file) and 
+(optionally) the
+index file (<TT><a href="ndx.html">ndx</a></TT>) to generate a run input file (<TT><a href="tpr.html">.tpr</a></tt> extension or
+<TT><a href="tpb.html">.tpb</a></tt> if you don't have XDR).
+This file contains all information needed to start a simulation with GROMACS. 
+The <a href="grompp.html">
+grompp</a> program processes all input files and generates the run input
+<tt><a href="tpr.html">.tpr</a></tt> file.
+<P></P>
+
+<DT>
+<h3><A NAME="trx">Trajectory file (<TT><a href="trr.html">.trr</a></TT></A>)</h3>
+<DD>
+Once the run input file is available, we can start the
+simulation. The program which starts the simulation is called 
+<a href="mdrun.html">mdrun</a>. The only input file
+of <TT><a href="mdrun.html">mdrun</a></TT> you usually need to start a run 
+is the run input file (<TT><a href="tpr.html">.tpr</a></TT> file).
+The output files of 
+<TT><a href="mdrun.html">mdrun</a></TT> are the
+trajectory file (<TT><a href="trr.html">.trr</a></TT> file
+or <TT><a href="trj.html">.trj</a></TT> if you don't have XDR) and a logfile (
+<TT><a href="log.html">.log</A></TT> file).
+<P></P>
+
+</DL>
+
+<br><hr><br>
+
+<P><H2><A NAME="ref">References</A></h2>
+
+<blockquote>
+<dl>
+
+<dt><A NAME="berendsen81">Berendsen, H.J.C., Postma, J.P.M., van
+Gunsteren, W.F., Hermans, J. (1981) <dd><it>Intermolecular
+Forces</it>, chapter Interaction models for water in relation to
+protein hydration, pp 331-342. Dordrecht: D. Reidel Publishing Company
+Dordrecht</dd><p>
+
+<dt><A NAME="kabsch83">Kabsch, W., Sander, C. (1983). <dd>Dictionary
+of protein secondary structure: Pattern recognition of hydrogen-bonded
+and geometrical features. <it>Biopolymers</it> <b>22</b>,
+2577--2637.</dd><p>
+
+<dt><A NAME="mierke91">Mierke, D.F., Kessler, H. (1991). <dd>Molecular
+dynamics with dimethyl sulfoxide as a solvent. Conformation of a
+cyclic hexapeptide. <it>J. Am. Chem. Soc.</it> <b>113</b>, 9446.</dd><p>
+
+<dt><A NAME="stryer88">Stryer, L. (1988). <dd><it>Biochemistry</it>
+vol. 1, p. 211. New York: Freeman, 3 edition.</dd><p>
+
+</dl>
+</blockquote>
+
+<br>
+<hr>
+<div ALIGN=RIGHT>
+<font size="-1"><a href="http://www.gromacs.org">http://www.gromacs.org</a></font><br>
+
+</div>
+</BODY>
+</HTML>
