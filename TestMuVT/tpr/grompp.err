@@ -1,0 +1,118 @@
+Option     Filename  Type         Description
+------------------------------------------------------------
+  -f /home/rpool/MARTINI/EOS_CG_water/T900.0/muVT/mu0/mdp/hybrid.mdp  Input,
+                                   Opt!  grompp input file with MD parameters
+ -po      mdout.mdp  Output       grompp input file with MD parameters
+  -c /home/rpool/MARTINI/EOS_CG_water/T900.0/muVT/mu0/gro/W426.gro  Input    
+                                   Structure file: gro g96 pdb tpr tpb tpa
+  -r       conf.gro  Input, Opt.  Structure file: gro g96 pdb tpr tpb tpa
+ -rb       conf.gro  Input, Opt.  Structure file: gro g96 pdb tpr tpb tpa
+  -n      index.ndx  Input, Opt.  Index file
+  -p /home/rpool/MARTINI/EOS_CG_water/T900.0/muVT/mu0/top/cg_W426.top  Input 
+                                   Topology file
+ -pp  processed.top  Output, Opt. Topology file
+  -o       W426.tpr  Output       Run input file: tpr tpb tpa
+  -t       traj.trr  Input, Opt.  Full precision trajectory: trr trj cpt
+  -e       ener.edr  Input, Opt.  Energy file: edr ene
+
+Option       Type   Value   Description
+------------------------------------------------------
+-[no]h       bool   no      Print help info and quit
+-nice        int    0       Set the nicelevel
+-[no]v       bool   yes     Be loud and noisy
+-time        real   -1      Take frame at or first after this time.
+-[no]rmvsbds bool   yes     Remove constant bonded interactions with virtual
+                            sites
+-maxwarn     int    1       Number of allowed warnings during input processing
+-[no]zero    bool   no      Set parameters for bonded interactions without
+                            defaults to zero instead of generating an error
+-[no]renum   bool   yes     Renumber atomtypes and minimize number of
+                            atomtypes
+
+Ignoring obsolete mdp entry 'title'
+Ignoring obsolete mdp entry 'cpp'
+
+Back Off! I just backed up mdout.mdp to ./#mdout.mdp.1#
+checking input for internal consistency...
+
+NOTE 1 [file /home/rpool/MARTINI/EOS_CG_water/T900.0/muVT/mu0/mdp/hybrid.mdp, line unknown]:
+  The Berendsen thermostat does not generate the correct kinetic energy
+  distribution. You might want to consider using the V-rescale thermostat.
+
+
+NOTE 2 [file /home/rpool/MARTINI/EOS_CG_water/T900.0/muVT/mu0/mdp/hybrid.mdp, line unknown]:
+  For energy conservation with switch/shift potentials, rlist should be 0.1
+  to 0.3 nm larger than rcoulomb.
+
+
+NOTE 3 [file /home/rpool/MARTINI/EOS_CG_water/T900.0/muVT/mu0/mdp/hybrid.mdp, line unknown]:
+  For energy conservation with switch/shift potentials, rlist should be 0.1
+  to 0.3 nm larger than rvdw.
+
+Generated 0 of the 465 non-bonded parameter combinations
+Excluding 1 bonded neighbours molecule type 'W'
+processing coordinates...
+double-checking input for internal consistency...
+renumbering atomtypes...
+converting bonded parameters...
+initialising group options...
+processing index file...
+Opening library file /usr/share/gromacs/top/aminoacids.dat
+
+WARNING 1 [file aminoacids.dat, line 1]:
+  For proper thermostat integration tau_t (0.1) should be more than an
+  order of magnitude larger than delta_t (0.02)
+
+Making dummy/rest group for Acceleration containing 426 elements
+Making dummy/rest group for Freeze containing 426 elements
+Number of degrees of freedom in T-Coupling group System is 1275.00
+Making dummy/rest group for User1 containing 426 elements
+Making dummy/rest group for User2 containing 426 elements
+Making dummy/rest group for XTC containing 426 elements
+Making dummy/rest group for Or. Res. Fit containing 426 elements
+Making dummy/rest group for QMMM containing 426 elements
+T-Coupling       has 1 element(s): System
+Energy Mon.      has 1 element(s): W
+Acceleration     has 1 element(s): rest
+Freeze           has 1 element(s): rest
+User1            has 1 element(s): rest
+User2            has 1 element(s): rest
+VCM              has 1 element(s): System
+XTC              has 1 element(s): rest
+Or. Res. Fit     has 1 element(s): rest
+QMMM             has 1 element(s): rest
+Checking consistency between energy and charge groups...
+writing run input file...
+
+There were 3 notes
+
+There was 1 warning
+
+gcq#274: "Working in the Burger Kings, Spitting on your Onion Rings" (Slim Shady)
+
+                         :-)  G  R  O  M  A  C  S  (-:
+
+               Go Rough, Oppose Many Angry Chinese Serial killers
+
+                            :-)  VERSION 4.0.5  (-:
+
+
+      Written by David van der Spoel, Erik Lindahl, Berk Hess, and others.
+       Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+             Copyright (c) 2001-2008, The GROMACS development team,
+            check out http://www.gromacs.org for more information.
+
+         This program is free software; you can redistribute it and/or
+          modify it under the terms of the GNU General Public License
+         as published by the Free Software Foundation; either version 2
+             of the License, or (at your option) any later version.
+
+                           :-)  /usr/bin/grompp  (-:
+
+processing topology...
+Analysing residue names:
+There are:   426      OTHER residues
+There are:     0    PROTEIN residues
+There are:     0        DNA residues
+Analysing Other...
+This run will generate roughly 0 Mb of data
