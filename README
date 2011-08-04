@@ -1,3 +1,82 @@
-A python interface for the GROMACS molecular simulation package.
+*****************************************************************************************
+* Welcome to GromPy, the python interface for the GROMACS molecular simulation package. *
+*****************************************************************************************
 
-More information will follow...
+------
+
+NOTES:
+* GromPy is compatible to the modified source of GROMACS 4.0.5 (gromacs-4.0.5_HYBRID).
+* The current version of GromPy is tested on 32-bit (i386,ia32) Ubuntu Linux versions
+  9.10 (Karmic Koala) and 11.04 (Natty Narwhal), and on 64-bit (x86_64,amd64) Debian
+  Linux version 6.0.2 (Squeeze).
+* Please let us know if GromPy is working on other distro's as well!
+
+------
+
+In order to get GromPy to work, please proceed through the following steps.
+
+* Compilation of the modified GROMACS source:
+  - Unpack gromacs-4.0.5_HYBRID.tar.bz2 in a working directory;
+  - cd gromacs-4.0.5_HYBRID;
+  - ./configure --prefix=$PWD --enable-shared --with-gsl CFLAGS="-O2"
+    (Note that the install directory of the necessary .so libraries will 
+    become $PWD/src/kernel/libmdrun0 or $PWD/src/kernel/libmdrun1, c.f. 
+    below);
+  - make;
+  - make install;
+  - ./gen_libmdrun0.sh (to generate a statically linked library);
+  - ./gen_libmdrun1.sh (to generate a dynamically linked library).
+
+The GromPy directory contains the python module that enables GCMC.
+It is important to correctly set the path to the gromacs dll in
+__init__.py, lines 26/27. The python code is a bit messy but should be
+readable enough. We hope improving this as soon as possible.
+
+The TestMuVT directory containis a shell script as an example of
+how to run the python module. The testsystem is a LJ fluid @ T=900K
+(MARTINI FORCEFIELD).
+
+In general, before running there is an important preprocessing step: You
+should have a tpr file for eacht configuration you would like to sample,
+c.f. directory "tpr"). The function mdrunner() is split up into three
+parts: init, integrate en finalize. The communication between these
+parts proceeds through a communication data structure that contains all
+necessary member data structures. For GCMC the most important ones are
+the velocity and coordinate arrays.
+
+The starting configuration (tpr) should contain no particle overlaps. For
+the TestMuVT directory this means that one should choose a GROMACS start
+configuration WXXX.tpr with XXX<400. Tpr files with a higher number of 
+molecules contain atomic overlaps and can therefore not be used as 
+starting configuration. At run time the content of the tpr file is allowed
+to have overlaps, since the coordinate and velocity arrays are copied from 
+a previous one, after which a trial particle insertion or removal is
+applied.
+
+Good luck!
+
+------
+
+DISCLAIMER:
+This code is NOT error-proof. Please notify us if you run into any problems.
+
+------
+
+=====================================================
+René Pool
+
+Division of Molecular and Computational Toxicology
+Department of Chemistry and Pharmaceutical Sciences
+Vrije Universiteit Amsterdam
+De Boelelaan 1083
+1081HV AMSTERDAM, the Netherlands
+-----
+IBIVU/Bioinformatics
+Department of Computer Science
+Vrije Universiteit Amsterdam
+De Boelelaan 1081a
+1081HV AMSTERDAM, the Netherlands
+
+E: r.pool@vu.nl
+=====================================================
+
