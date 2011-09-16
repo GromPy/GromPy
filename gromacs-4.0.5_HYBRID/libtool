@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # libtoolT - Provide generalized library-building support services.
 # Generated automatically by  (GNU gromacs 4.0.5)
@@ -44,10 +44,10 @@ available_tags=" CXX"
 
 # ### BEGIN LIBTOOL CONFIG
 
-# Libtool was configured on host rini:
+# Libtool was configured on host osgiliath:
 
 # Shell to use when invoking shell scripts.
-SHELL="/bin/sh"
+SHELL="/bin/bash"
 
 # Whether or not to build shared libraries.
 build_libtool_libs=yes
@@ -66,12 +66,12 @@ fast_install=yes
 
 # The host system.
 host_alias=
-host=i686-pc-linux-gnu
+host=x86_64-unknown-linux-gnu
 host_os=linux-gnu
 
 # The build system.
 build_alias=
-build=i686-pc-linux-gnu
+build=x86_64-unknown-linux-gnu
 build_os=linux-gnu
 
 # An echo program that does not interpret backslashes.
@@ -97,7 +97,7 @@ with_gcc=yes
 EGREP="/bin/grep -E"
 
 # The linker used to build libraries.
-LD="/usr/bin/ld"
+LD="/usr/bin/ld -m elf_x86_64"
 
 # Whether we need hard or soft links.
 LN_S="ln -s"
@@ -325,10 +325,10 @@ variables_saved_for_relink="PATH LD_LIBRARY_PATH LD_RUN_PATH GCC_EXEC_PREFIX COM
 link_all_deplibs=unknown
 
 # Compile-time system search path for libraries
-sys_lib_search_path_spec=" /usr/local/intel/Compiler/11.1/069/lib/ia32/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/lib/ia32/../lib/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/../lib/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/../lib/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/../lib/ /usr/local/intel/Compiler/11.1/069/lib/ia32/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/lib/ia32/../lib/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/../lib/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/../lib/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/../lib/ /opt/intel/itt/tcheck/bin/32/i486-linux-gnu/4.4.1/ /opt/intel/itt/tcheck/bin/32/../lib/ /opt/intel/itt/bin/32/i486-linux-gnu/4.4.1/ /opt/intel/itt/bin/32/../lib/ /opt/intel/itt/bin/i486-linux-gnu/4.4.1/ /opt/intel/itt/bin/../lib/ /usr/lib/gcc/i486-linux-gnu/4.4.1/ /usr/lib/gcc/i486-linux-gnu/4.4.1/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../i486-linux-gnu/lib/i486-linux-gnu/4.4.1/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../i486-linux-gnu/lib/../lib/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../i486-linux-gnu/4.4.1/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../lib/ /lib/i486-linux-gnu/4.4.1/ /lib/../lib/ /usr/lib/i486-linux-gnu/4.4.1/ /usr/lib/../lib/ /usr/lib/i486-linux-gnu/i486-linux-gnu/4.4.1/ /usr/lib/i486-linux-gnu/../lib/ /usr/local/intel/Compiler/11.1/069/lib/ia32/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/ /usr/local/intel/Compiler/11.1/069/lib/ia32/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/ /opt/intel/itt/tcheck/bin/32/ /opt/intel/itt/bin/32/ /opt/intel/itt/bin/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../i486-linux-gnu/lib/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../ /lib/ /usr/lib/ /usr/lib/i486-linux-gnu/"
+sys_lib_search_path_spec=" /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/4.5.2/ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../../../x86_64-linux-gnu/lib/ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../x86_64-linux-gnu/4.5.2/ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../ /lib/x86_64-linux-gnu/4.5.2/ /lib/ /usr/lib/x86_64-linux-gnu/4.5.2/ /usr/lib/ /usr/lib/x86_64-linux-gnu/x86_64-linux-gnu/4.5.2/ /usr/lib/x86_64-linux-gnu/"
 
 # Run-time system search path for libraries
-sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/atlas /lib/i486-linux-gnu /usr/lib/i486-linux-gnu /usr/lib/alsa-lib /usr/local/lib "
+sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/fglrx /usr/lib32/fglrx /lib32 /usr/lib32 /usr/lib32/alsa-lib /usr/lib/alsa-lib /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu "
 
 # Fix the shell variable $srcfile for the compiler.
 fix_srcfile_path=""
@@ -7308,10 +7308,10 @@ disable_libs=static
 # End:
 # ### BEGIN LIBTOOL TAG CONFIG: CXX
 
-# Libtool was configured on host rini:
+# Libtool was configured on host osgiliath:
 
 # Shell to use when invoking shell scripts.
-SHELL="/bin/sh"
+SHELL="/bin/bash"
 
 # Whether or not to build shared libraries.
 build_libtool_libs=yes
@@ -7330,12 +7330,12 @@ fast_install=yes
 
 # The host system.
 host_alias=
-host=i686-pc-linux-gnu
+host=x86_64-unknown-linux-gnu
 host_os=linux-gnu
 
 # The build system.
 build_alias=
-build=i686-pc-linux-gnu
+build=x86_64-unknown-linux-gnu
 build_os=linux-gnu
 
 # An echo program that does not interpret backslashes.
@@ -7361,7 +7361,7 @@ with_gcc=yes
 EGREP="/bin/grep -E"
 
 # The linker used to build libraries.
-LD="/usr/bin/ld"
+LD="/usr/bin/ld -m elf_x86_64"
 
 # Whether we need hard or soft links.
 LN_S="ln -s"
@@ -7490,11 +7490,11 @@ striplib="strip --strip-unneeded"
 
 # Dependencies to place before the objects being linked to create a
 # shared library.
-predep_objects="/usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../lib/crti.o /usr/lib/gcc/i486-linux-gnu/4.4.1/crtbeginS.o"
+predep_objects="/usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../crti.o /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/crtbeginS.o"
 
 # Dependencies to place after the objects being linked to create a
 # shared library.
-postdep_objects="/usr/lib/gcc/i486-linux-gnu/4.4.1/crtendS.o /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../lib/crtn.o"
+postdep_objects="/usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/crtendS.o /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../crtn.o"
 
 # Dependencies to place before the objects being linked to create a
 # shared library.
@@ -7506,7 +7506,7 @@ postdeps="-lstdc++ -lm -lgcc_s -lc -lgcc_s"
 
 # The library search path used internally by the compiler when linking
 # a shared library.
-compiler_lib_search_path="-L/usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/../lib -L/usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/../lib -L/usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/../lib -L/usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.4.1 -L/usr/lib/gcc/i486-linux-gnu/4.4.1 -L/usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/local/intel/Compiler/11.1/069/lib/ia32 -L/usr/local/intel/Compiler/11.1/069/ipp/ia32/lib -L/usr/local/intel/Compiler/11.1/069/mkl/lib/32 -L/usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib -L/usr/local/intel/Compiler/11.1/069/lib/ia32 -L/usr/local/intel/Compiler/11.1/069/ipp/ia32/lib -L/usr/local/intel/Compiler/11.1/069/mkl/lib/32 -L/usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib -L/opt/intel/itt/tcheck/bin/32 -L/opt/intel/itt/bin/32 -L/opt/intel/itt/bin -L/usr/lib/gcc/i486-linux-gnu/4.4.1/../../.. -L/usr/lib/i486-linux-gnu"
+compiler_lib_search_path="-L/usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2 -L/usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../.. -L/usr/lib/x86_64-linux-gnu"
 
 # Method to check whether dependent libraries are shared objects.
 deplibs_check_method="pass_all"
@@ -7586,10 +7586,10 @@ variables_saved_for_relink="PATH LD_LIBRARY_PATH LD_RUN_PATH GCC_EXEC_PREFIX COM
 link_all_deplibs=unknown
 
 # Compile-time system search path for libraries
-sys_lib_search_path_spec=" /usr/local/intel/Compiler/11.1/069/lib/ia32/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/lib/ia32/../lib/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/../lib/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/../lib/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/../lib/ /usr/local/intel/Compiler/11.1/069/lib/ia32/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/lib/ia32/../lib/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/../lib/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/../lib/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/i486-linux-gnu/4.4.1/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/../lib/ /opt/intel/itt/tcheck/bin/32/i486-linux-gnu/4.4.1/ /opt/intel/itt/tcheck/bin/32/../lib/ /opt/intel/itt/bin/32/i486-linux-gnu/4.4.1/ /opt/intel/itt/bin/32/../lib/ /opt/intel/itt/bin/i486-linux-gnu/4.4.1/ /opt/intel/itt/bin/../lib/ /usr/lib/gcc/i486-linux-gnu/4.4.1/ /usr/lib/gcc/i486-linux-gnu/4.4.1/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../i486-linux-gnu/lib/i486-linux-gnu/4.4.1/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../i486-linux-gnu/lib/../lib/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../i486-linux-gnu/4.4.1/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../lib/ /lib/i486-linux-gnu/4.4.1/ /lib/../lib/ /usr/lib/i486-linux-gnu/4.4.1/ /usr/lib/../lib/ /usr/lib/i486-linux-gnu/i486-linux-gnu/4.4.1/ /usr/lib/i486-linux-gnu/../lib/ /usr/local/intel/Compiler/11.1/069/lib/ia32/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/ /usr/local/intel/Compiler/11.1/069/lib/ia32/ /usr/local/intel/Compiler/11.1/069/ipp/ia32/lib/ /usr/local/intel/Compiler/11.1/069/mkl/lib/32/ /usr/local/intel/Compiler/11.1/069/tbb/ia32/cc4.1.0_libc2.4_kernel2.6.16.21/lib/ /opt/intel/itt/tcheck/bin/32/ /opt/intel/itt/bin/32/ /opt/intel/itt/bin/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../../i486-linux-gnu/lib/ /usr/lib/gcc/i486-linux-gnu/4.4.1/../../../ /lib/ /usr/lib/ /usr/lib/i486-linux-gnu/"
+sys_lib_search_path_spec=" /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/4.5.2/ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../../../x86_64-linux-gnu/lib/ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../x86_64-linux-gnu/4.5.2/ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/../../../ /lib/x86_64-linux-gnu/4.5.2/ /lib/ /usr/lib/x86_64-linux-gnu/4.5.2/ /usr/lib/ /usr/lib/x86_64-linux-gnu/x86_64-linux-gnu/4.5.2/ /usr/lib/x86_64-linux-gnu/"
 
 # Run-time system search path for libraries
-sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/atlas /lib/i486-linux-gnu /usr/lib/i486-linux-gnu /usr/lib/alsa-lib /usr/local/lib "
+sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/fglrx /usr/lib32/fglrx /lib32 /usr/lib32 /usr/lib32/alsa-lib /usr/lib/alsa-lib /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu "
 
 # Fix the shell variable $srcfile for the compiler.
 fix_srcfile_path=""

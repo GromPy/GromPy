@@ -2,13 +2,13 @@
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Hardware and OS version for build host */
-#define BUILD_MACHINE "Linux 2.6.31-23-generic i686"
+#define BUILD_MACHINE "Linux 2.6.38-11-generic x86_64"
 
 /* Date and time for build */
-#define BUILD_TIME "Thu Jun 16 15:39:29 CEST 2011"
+#define BUILD_TIME "Fri Sep 16 15:52:27 CEST 2011"
 
 /* User doing build */
-#define BUILD_USER "rpool@rini"
+#define BUILD_USER "martin@osgiliath"
 
 /* Turn off water-water neighborlist optimization only */
 /* #undef DISABLE_WATERWATER_NLIST */
@@ -77,10 +77,10 @@
 /* #undef GMX_FORTRAN */
 
 /* Single-precision 3DNow! instructions on ia32 */
-#define GMX_IA32_3DNOW 
+/* #undef GMX_IA32_3DNOW */
 
 /* Single-precision SSE instructions on ia32 */
-#define GMX_IA32_SSE 
+/* #undef GMX_IA32_SSE */
 
 /* Double-precision SSE2 instructions on ia32 */
 /* #undef GMX_IA32_SSE2 */
@@ -125,13 +125,13 @@
 /* #undef GMX_THREAD_PTHREAD */
 
 /* Single-precision SSE instructions on X86_64 */
-/* #undef GMX_X86_64_SSE */
+#define GMX_X86_64_SSE 
 
 /* Double-precision SSE2 instructions on X86_64 */
 /* #undef GMX_X86_64_SSE2 */
 
 /* Enable x86 gcc inline assembly */
-#define GMX_X86_GCC_INLINE_ASM 
+/* #undef GMX_X86_GCC_INLINE_ASM */
 
 /* Enable x86 MSVC inline assembly */
 /* #undef GMX_X86_MSVC_INLINE_ASM */
@@ -152,7 +152,7 @@
 #define HAVE_FSEEKO 1
 
 /* Define to 1 if you have the <gsl/gsl_version.h> header file. */
-#define HAVE_GSL_GSL_VERSION_H 1
+/* #undef HAVE_GSL_GSL_VERSION_H */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -164,7 +164,7 @@
 #define HAVE_LIBFFTW3F 1
 
 /* Define to 1 if you have the `gsl' library (-lgsl). */
-#define HAVE_LIBGSL 1
+/* #undef HAVE_LIBGSL */
 
 /* Define to 1 if you have the `m' library (-lm). */
 #define HAVE_LIBM 1
@@ -257,13 +257,13 @@
 #define SIZEOF_INT 4
 
 /* The size of `long int', as computed by sizeof. */
-#define SIZEOF_LONG_INT 4
+#define SIZEOF_LONG_INT 8
 
 /* The size of `long long int', as computed by sizeof. */
 #define SIZEOF_LONG_LONG_INT 8
 
 /* The size of `off_t', as computed by sizeof. */
-#define SIZEOF_OFF_T 4
+#define SIZEOF_OFF_T 8
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -281,7 +281,7 @@
 /* #undef X_DISPLAY_MISSING */
 
 /* Number of bits in a file offset, on hosts where this is settable. */
-#define _FILE_OFFSET_BITS 64
+/* #undef _FILE_OFFSET_BITS */
 
 /* Define to 1 to make fseeko visible on some hosts (e.g. glibc 2.2). */
 /* #undef _LARGEFILE_SOURCE */

@@ -34,8 +34,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i686-pc-linux-gnu
-host_triplet = i686-pc-linux-gnu
+build_triplet = x86_64-unknown-linux-gnu
+host_triplet = x86_64-unknown-linux-gnu
 subdir = share/template
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -58,14 +58,14 @@ am__installdirs = "$(DESTDIR)$(templatedir)"
 templateDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(template_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/config/missing --run aclocal-1.10
-AMTAR = ${SHELL} /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/config/missing --run tar
+ACLOCAL = ${SHELL} /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/config/missing --run aclocal-1.10
+AMTAR = ${SHELL} /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/config/missing --run tar
 AR = ar
 AS = cc
 ASFLAGS = -O2
-AUTOCONF = ${SHELL} /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/config/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/config/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/config/missing --run automake-1.10
+AUTOCONF = ${SHELL} /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/config/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/config/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/config/missing --run automake-1.10
 AWK = gawk
 CC = cc
 CCAS = cc
@@ -108,14 +108,14 @@ INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 # Since a Makefile is used for the installation, we call the
 # template makefile Template.mak, and rename it to Makefile when installing.
 # We add the GMX_DOUBLE define to CPPFLAGS, so users can do without config.h
-LDFLAGS = -L${exec_prefix}/lib  -lgslcblas 
+LDFLAGS = -L${exec_prefix}/lib  
 LIBOBJS = 
-LIBS = -lmd -lgmx -lgsl  -lnsl -lfftw3f -lm   -lSM -lICE -lX11   
+LIBS = -lmd -lgmx  -lnsl -lfftw3f -lm   -lX11   
 LIBSUFFIX = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/config/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/config/missing --run makeinfo
 MDLIB_LIBOBJS =  qm_gaussian.lo gmx_fft_fftw3.lo
 MKDIR_P = /bin/mkdir -p
 MPICC = 
@@ -132,18 +132,18 @@ RANLIB = ranlib
 RPM = rpm
 SET_MAKE = 
 SHARED_VERSION_INFO = 5:0:0
-SHELL = /bin/sh
+SHELL = /bin/bash
 STRIP = strip
 VERSION = 4.0.5
 XMKMF = 
 X_CFLAGS = 
 X_EXTRA_LIBS = 
 X_LIBS = 
-X_PRE_LIBS =  -lSM -lICE
-abs_builddir = /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/share/template
-abs_srcdir = /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/share/template
-abs_top_builddir = /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID
-abs_top_srcdir = /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID
+X_PRE_LIBS = 
+abs_builddir = /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/share/template
+abs_srcdir = /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/share/template
+abs_top_builddir = /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID
+abs_top_srcdir = /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID
 ac_ct_CC = cc
 ac_ct_CXX = g++
 ac_ct_F77 = 
@@ -153,26 +153,26 @@ am__quote =
 am__tar = tar --format=ustar -chf - "$$tardir"
 am__untar = tar -xf -
 bindir = ${exec_prefix}/bin
-build = i686-pc-linux-gnu
+build = x86_64-unknown-linux-gnu
 build_alias = 
-build_cpu = i686
+build_cpu = x86_64
 build_os = linux-gnu
-build_vendor = pc
+build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i686-pc-linux-gnu
+host = x86_64-unknown-linux-gnu
 host_alias = 
-host_cpu = i686
+host_cpu = x86_64
 host_os = linux-gnu
-host_vendor = pc
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = $(SHELL) /home/rpool/GitHub/GromPy/gromacs-4.0.5_HYBRID/config/install-sh
+install_sh = $(SHELL) /home/martin/projects/GromPy/gromacs-4.0.5_HYBRID/config/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -181,8 +181,8 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/rpool/src/gromacs-4.0.5_TEST
-program_transform_name = s,x,x,
+prefix = /home/martin/local
+program_transform_name = s&$$&_grompy&
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
@@ -194,10 +194,10 @@ top_srcdir = ../..
 templatedir = ${pkgdatadir}/template
 MYCFLAGS = -O2   -I${prefix}/include -I${prefix}/include/gromacs
 #MYCFLAGS = -O2   -I${prefix}/include -I${prefix}/include/gromacs -DGMX_DOUBLE
-template_DATA = template.c README Makefile.i686-pc-linux-gnu
-#template_DATA = template.c README Makefile.i686-pc-linux-gnu_double
+template_DATA = template.c README Makefile.x86_64-unknown-linux-gnu
+#template_DATA = template.c README Makefile.x86_64-unknown-linux-gnu_double
 EXTRA_DIST = template.c README Template.mak
-CLEANFILES = Makefile.i686-pc-linux-gnu Makefile.i686-pc-linux-gnu_double *~ \\\#*
+CLEANFILES = Makefile.x86_64-unknown-linux-gnu Makefile.x86_64-unknown-linux-gnu_double *~ \\\#*
 all: all-am
 
 .SUFFIXES:
@@ -387,13 +387,13 @@ uninstall-am: uninstall-templateDATA
 	uninstall uninstall-am uninstall-templateDATA
 
 
-Makefile.i686-pc-linux-gnu Makefile.i686-pc-linux-gnu_double: Template.mak Makefile 
+Makefile.x86_64-unknown-linux-gnu Makefile.x86_64-unknown-linux-gnu_double: Template.mak Makefile 
 	cat $(srcdir)/Template.mak | \
 	sed 's,@LDFLAGS\@,$(LDFLAGS),' | \
 	sed 's,@LIBS\@,$(LIBS),' | \
 	sed 's,@CFLAGS\@,$(MYCFLAGS),' | \
 	sed 's,@CC\@,$(CC),' | \
-	sed 's,@host\@,i686-pc-linux-gnu,' >$@
+	sed 's,@host\@,x86_64-unknown-linux-gnu,' >$@
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
