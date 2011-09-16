@@ -10,22 +10,47 @@ from os import environ
 
 import sys
 
-libc = cdll.LoadLibrary("/lib/libc.so.6")
-# gromacs shuold be compiled with -lfftw3f!!!
-if environ.has_key("GROMPYDOUBLE"):
+
+libcname="/lib/libc.so.6"
+
+if environ.has_key("GROMPY_DOUBLE"):
     isdouble=True
-    print "Loading GromPy with double precision library..."
     c_real = c_double
-    libmd  = cdll.LoadLibrary("libmd_d.so")
-    libgmx = cdll.LoadLibrary("libgmx_d.so")
+    print "Loading GromPy with double precision library..."
+    libmdname="libmd_d.so"
+    libgmxname="libgmx_d.so"
+    libmdrunname="mdrun_d.so"
+
 else:
     isdouble=False
-    print "Loading GromPy with single precision library..."
     c_real   = c_float
-    libmd    = cdll.LoadLibrary("libmd.so")
-    libgmx   = cdll.LoadLibrary("libgmx.so")
+    print "Loading GromPy with single precision library..."
+    libmdname="libmd.so"
+    libgmxname="libgmx.so"
+    libmdrunname="mdrun.so"
+    
+if environ.has_key("GROMPY_LIBEXT"):
+    libmdname="libmd%s.so"%environ["GROMPY_LIBEXT"]
+    libgmxname="libgmx%s.so"%environ["GROMPY_LIBEXT"]
+    libmdrunname="mdrun%s.so"%environ["GROMPY_LIBEXT"]
+    
+if environ.has_key("GROMPY_LIBGMX"):
+    libgmxname=environ["GROMPY_LIBGMX"]
+
+if environ.has_key("GROMPY_LIBMD"):
+    libmdname=environ["GROMPY_LIBMD"]
+
+if environ.has_key("GROMPY_LIBMDRUN"):
+    libmdrunname=environ["GROMPY_LIBMDRUN"]
+
+libc = cdll.LoadLibrary(libcname)
+libmd    = cdll.LoadLibrary(libmdname)
+libgmx   = cdll.LoadLibrary(libgmxname)
+libmdrun = cdll.LoadLibrary(libmdrunname)
+
+# gromacs shuold be compiled with -lfftw3f!!!
 #    libmdrun = cdll.LoadLibrary(environ["HOME"]+"/src/gromacs-4.0.5_TEST/src/kernel/libmdrun0/mdrun.so") # for debugging purposes
-    libmdrun = cdll.LoadLibrary(environ["HOME"]+"/src/gromacs-4.0.5_TEST/src/kernel/libmdrun1/mdrun.so")
+
 
 #FILE * to stderr, stdout
 pythonapi.PyFile_AsFile.restype = c_void_p

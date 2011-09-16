@@ -26,6 +26,16 @@ In order to get GromPy to work, please proceed through the following steps.
   - make install;
   - ./gen_libmdrun0.sh (to generate a statically linked library);
   - ./gen_libmdrun1.sh (to generate a dynamically linked library).
+  - for a parallel install with other gromacs versions you can define e.g.
+
+* Specify via environment variables which shared libraries to load:
+  - By default, Grompy will load libmd.so libgmx.so and libmdrun.so for single precision
+    and libmd_d.so libgmx_d.so and libmdrun_d.so for double precision from the linker search path.
+  - Double precicion is turned on by setting the GROMPY_DOUBLE environment variable.
+  - Specifying GROMPY_LIBEXT allows a parallel install of the libraries e.g. libgmx_grompy.so from 
+    the modified source and from libgmx.so used for the simulations.
+  - Loading of each individual library can also set by GROMPY_LIBGMX, GROMPY_LIBMD and 
+    GROMPY_LIBMDRUN. E.g. GROMPY_LIBMDRUN="~/src/gromacs-4.0.5_TEST/src/kernel/libmdrun0/mdrun.so"
 
 The GromPy directory contains the python module that enables GCMC.
 It is important to correctly set the path to the gromacs dll in
