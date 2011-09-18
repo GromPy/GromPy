@@ -1,0 +1,25 @@
+
+Untar & patch:
+	tar -xzf ../gromacs-4.0.7-git.tar.gz 
+	cd gromacs-4.0.7-git/
+	patch -p1 < ../../grompy_4.0.7_patch.diff
+
+Prepare Build 
+./bootstrap 
+./configure --enable-shared --enable-grompy --prefix=$(pwd)/install
+
+Build and install source
+	make -j 10
+	make install
+
+Set variables
+	export LD_LIBRARY_PATH=$(pwd)/install/lib
+	export GROMPY_LIBEXT="_grompy"
+
+Import should work...
+	python -c "import grompy"
+
+Todo: 
+	- clean way to install library only "make install-lib"
+	- TEST! So far I just tested the import 
+
