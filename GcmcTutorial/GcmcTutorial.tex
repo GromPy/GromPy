@@ -1,0 +1,66 @@
+\documentclass[fleqn,a4paper,12pt]{article}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{pifont}
+\usepackage{authblk}
+\usepackage{setspace}
+
+\newcommand\vcent[1]{\ensuremath{\vcenter{\hbox{{#1}}}}}
+
+\renewcommand{\thetable}{\Roman{table}}
+
+\title{Tutorial: Using {\tt GromPy} in GCMC mode}
+
+\author[1,2,*]{Ren\'e Pool}
+
+\affil[1]{Centre for Integrative Bioinformatics Vrije Universiteit (IBIVU),
+Vrije Universiteit Amsterdam, De Boelelaan 1081a, 1081HV Amsterdam, the Netherlands}
+\affil[2]{Netherlands Bioinformatics Centre, Geert Grooteplein 28, 6525GA
+Nijmegen, the Netherlands}
+\affil[*]{Email: \texttt{r.pool@vu.nl}}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% ------------------------------------------------------------------------------
+\begin{abstract}
+This tutorial will let the user undergo all necessary steps to perform
+simulations in the grand-canonical ensemble using the {\tt GROMACS} molecular
+simulation library via the {\tt GromPy} interface. After going through this
+tutorial you will be able to calculate an equation of state (EOS) of the
+Lennard-Jones fluid. We assume that you use {\tt bash} shell of the Linux
+operating system. If you are unfamiliar with some Linux commands, you can find
+documentation in the corresponding {\tt man} pages or on the web.
+\end{abstract}
+
+\section{Downloading the required files}
+\begin{itemize}
+	\item Go to your favorite working directory: {\tt \$WORK}, e.g. {\tt
+	\$WORK=/home/user/Simulation}
+	\begin{itemize}
+		\item[$\to$] {\tt cd \$WORK}
+    \end{itemize}
+	\item Use {\tt git} to download the {\tt GromPy} files
+	\begin{itemize}
+		\item[$\to$] {\tt git clone git://github.com/GromPy/GromPy.git}
+	\end{itemize}
+	\item Go to the {\tt GromPy} directory
+	\begin{itemize}
+		\item[$\to$] {\tt cd GromPy}
+	\end{itemize}
+	\item Compile the {\tt GROMACS} source code
+	\begin{itemize}
+	  \item[$\to$] {\tt cd gromacs}
+	  \item[$\to$] {\tt cd gromacs-4.0.5_HYBRID}
+	  \item[$\to$] {\tt }
+	\end{itemize}
+\end{itemize}
+
+
+\end{document}
