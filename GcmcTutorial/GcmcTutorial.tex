@@ -93,19 +93,22 @@ man} pages or on the web.
 \section{Calculation of the Lennard-Jones equation of state}
 \begin{itemize}
   	\item The initial starting structure of the LJ system is an equilibrated one
-  	containing $N=400$ LJ particles in a cubic box. Since it is equilibated,
+  	containing $N=400$ LJ particles in a cubic box. Since it is equilibrated,
   	there is no need to energy minimize the system. We will however equilibrate it using
   	MD for the desired temperature $T=773~\rm K$, just to be sure. This is done
   	in two steps: (1) equilibration using a small time step and (2) production at
   	the target time step $dt=0.02~\rm ps$.
   	\begin{itemize}
   		\item[$\to$] {\tt cd GcmcLj}
+  		\item[$\to$] {\tt mkdir mdeq}
   		\item[$\to$] {\tt cd mdeq}
   		\item[$\to$] {\tt grompp -f ../mdp/mdeq.mdp \char`\\}\\
   					 {\tt -c ../initstructure/water.gro \char`\\}\\
   					 {\tt -p ../top/W400.top}
   		\item[$\to$] {\tt mdrun}
-  		\item[$\to$] {\tt cd ../mdprod}
+  		\item[$\to$] {\tt cd ..}
+  		\item[$\to$] {\tt mkdir mdprod}
+  		\item[$\to$] {\tt cd mdprod}
   		\item[$\to$] {\tt grompp -f ../mdp/mdprod.mdp \char`\\}\\
   					 {\tt -c ../mdeq/confout.gro \char`\\}\\
   					 {\tt -p ../top/W400.top \char`\\}\\
@@ -147,7 +150,7 @@ man} pages or on the web.
   	generating block averages of the results. We postprocess the resulting file to obtain the equation of state: the
   	excess chemical potential as a function of density.
   	\begin{itemize}
-  	  	\item[$\to$] {\tt DoBlockAveraging.sh}
+  	  	\item[$\to$] {\tt ./DoBlockAveraging.sh}
   	\end{itemize}
   	\item Use your favorite plotting tool to check out the results in file
   	\newline {\tt \char`\"rho\_of\_mu\_with\_units.dat\char`\"}. If all works
