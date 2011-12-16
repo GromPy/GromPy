@@ -61,14 +61,14 @@ man} pages or on the web.
 	\begin{itemize}
 		\item[$\to$] {\tt cd gromacs}
 		\item[$\to$] {\tt cd gromacs-4.0.7}
-		\item[$\to$] {\tt tar -xzf ../gromacs-4.0.7-git.tar.gz} 
+		\item[$\to$] {\tt tar -xzf gromacs-4.0.7-git.tar.gz} 
 		\item[$\to$] {\tt cd gromacs-4.0.7-git}
 		\item[$\to$] {\tt patch -p1 < ../grompy\_4.0.7\_patch.diff}
 		\item[$\to$] {\tt ./bootstrap} 
 		\item[$\to$] {\tt ./configure --enable-shared \char`\\ }\\
 					   {\tt --enable-grompy \char`\\} \\
 				       {\tt --prefix=\$PWD/install \char`\\}\\
-				       {\tt -CFLAGS \char`\"-O2 -fPIC\char`\"}
+				       {\tt CFLAGS=\char`\"-O2 -fPIC\char`\"}
 		\item[$\to$] {\tt make -j 10}
 		\item[$\to$] {\tt make install}
 	\end{itemize}
