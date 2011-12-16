@@ -1,0 +1,61 @@
+;
+; md.mdp
+; Generated automatically by: /home/rpool/workspace/PyWork/trunk/Pull/src/MDP.pyc
+; User: rpool
+; Date: 2010-04-12
+; Time: 16:03:19.797442
+;
+
+; Preprocessing options:
+cpp			= /lib/cpp
+title			= md
+
+; Run control parameters:
+comm_grps		= System
+integrator		= md
+dt			    = 0.02
+nstcomm			= 1
+nsteps			= 10000
+tinit			= 0.0
+
+; Output control options:
+nstfout			= 100
+nstenergy		= 100
+nstxtcout		= 100
+energygrps		= System
+xtc_precision	= 1000
+nstxout			= 100
+nstvout			= 100
+nstlog			= 100
+
+; Neighborsearching parameters:
+rlist			= 1.2
+
+; Options for electrostatics and vdw:
+vdw_type		= shift
+coulombtype		= shift
+epsilon_r		= 15
+fourier_nz		= 10
+rcoulomb		= 1.2
+fourier_nx		= 10
+rvdw_switch		= 0.9
+fourier_ny		= 10
+rvdw			= 1.2
+
+; Options for weak coupling algorithms:
+tcoupl			= Berendsen
+tc-grps			= System
+Pcoupltype		= isotropic
+ref_p			= 20000.0
+Pcoupl			= no
+ref_t			= 773
+andersen_seed	= 815131
+compressibility	= 1e-5
+tau_t			= 0.1
+tau_p			= 0.5
+
+; Generate velocities for startup run:
+gen_vel			= yes
+gen_temp		= 773
+gen_seed		= 171533
+

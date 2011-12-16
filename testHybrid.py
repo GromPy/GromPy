@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 #from ctypes import c_char_p
 import sys
 
@@ -24,4 +26,5 @@ if(len(sys.argv)>7 and sys.argv[7]=='NrgGrps'):
 else:
     bUseNrgGrps = False
     from grompy.Hybrid import *
+    print "joh"
     hybrid(Mu,NStart,NMax,NMin,TprDir,MolName)

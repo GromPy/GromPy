@@ -34,15 +34,18 @@ This tutorial will let the user undergo all necessary steps to perform
 simulations in the grand-canonical ensemble using the {\tt GROMACS} molecular
 simulation library via the {\tt GromPy} interface. After going through this
 tutorial you will be able to calculate an equation of state (EOS) of the
-Lennard-Jones fluid. We assume that you use {\tt bash} shell of the Linux
-operating system. If you are unfamiliar with some Linux commands, you can find
-documentation in the corresponding {\tt man} pages or on the web.
+Lennard-Jones (LJ) fluid. The system consists of mono-atomic water molceules
+defined in the MARTINI force field. The intermolecular interactions between
+such molecules are modelled using the Lennard-Jones potential only. We assume
+that you use {\tt bash} shell of the Linux operating system. If you are unfamiliar
+with some Linux commands, you can find documentation in the corresponding {\tt
+man} pages or on the web.
 \end{abstract}
 
 \section{Downloading and installing the required files}
 \begin{itemize}
-	\item Go to your favorite working directory: {\tt \$WORK}, e.g. {\tt
-	\$WORK=/home/user/Simulation}
+	\item Go to your favorite working directory: {\tt \$WORK}, e.g. {\tt 
+	WORK=/home/user/Simulation}
 	\begin{itemize}
 		\item[$\to$] {\tt cd \$WORK}
     \end{itemize}
@@ -56,11 +59,102 @@ documentation in the corresponding {\tt man} pages or on the web.
 	\end{itemize}
 	\item Compile the {\tt GROMACS} source code
 	\begin{itemize}
-	  \item[$\to$] {\tt cd gromacs}
-	  \item[$\to$] {\tt cd gromacs-4.0.5\_HYBRID}
-	  \item[$\to$] {\tt something else}
+		\item[$\to$] {\tt cd gromacs}
+		\item[$\to$] {\tt cd gromacs-4.0.7}
+		\item[$\to$] {\tt tar -xzf ../gromacs-4.0.7-git.tar.gz} 
+		\item[$\to$] {\tt cd gromacs-4.0.7-git}
+		\item[$\to$] {\tt patch -p1 < ../grompy\_4.0.7\_patch.diff}
+		\item[$\to$] {\tt ./bootstrap} 
+		\item[$\to$] {\tt ./configure --enable-shared \char`\\ }\\
+					   {\tt --enable-grompy \char`\\} \\
+				       {\tt --prefix=\$PWD/install \char`\\}\\
+				       {\tt -CFLAGS \char`\"-O2 -fPIC\char`\"}
+		\item[$\to$] {\tt make -j 10}
+		\item[$\to$] {\tt make install}
 	\end{itemize}
+	\item Save the {\tt GROMACS} install path to a variable
+	\begin{itemize}
+		\item[$\to$] {\tt GMXINSTALLDIR=\$PWD/install}
+	\end{itemize}
+	\item Go to the tutorial directory
+	\begin{itemize}
+	  	\item[$\to$] {\tt cd ../../../GcmcTutorial} 
+	\end{itemize}
+	\item We now need to ``{\tt source}'' the {\tt GROMACS} and {\tt GromPy}
+	      environment variables\\
+		  THIS NEEDS TO BE DONE WHENEVER YOU USE {\tt GromPy} IN A NEWLY OPENED
+		  SHELL (SO REMEMBER THE {\tt GROMACS} INSTALLATION DIRECTORY)!!
+	\begin{itemize}
+	    \item[$\to$] {\tt source \$GMXINSTALLDIR/bin/GMXRC}
+	  	\item[$\to$] {\tt source ./SourceGromPyEnv.sh \$GMXINSTALLDIR} 
+  	\end{itemize}
 \end{itemize}
 
+\section{Calculation of the Lennard-Jones equation of state}
+\begin{itemize}
+  	\item The initial starting structure of the LJ system is an equilibrated one
+  	containing $N=400$ LJ particles in a cubic box. Since it is equilibated,
+  	there is no need to energy minimize the system. We will however equilibrate it using
+  	MD for the desired temperature $T=773~\rm K$, just to be sure. This is done
+  	in two steps: (1) equilibration using a small time step and (2) production at
+  	the target time step $dt=0.02~\rm ps$.
+  	\begin{itemize}
+  		\item[$\to$] {\tt cd GcmcLj}
+  		\item[$\to$] {\tt cd mdeq}
+  		\item[$\to$] {\tt grompp -f ../mdp/mdeq.mdp \char`\\}\\
+  					 {\tt -c ../initstructure/water.gro \char`\\}\\
+  					 {\tt -p ../top/W400.top}
+  		\item[$\to$] {\tt mdrun}
+  		\item[$\to$] {\tt cd ../mdprod}
+  		\item[$\to$] {\tt grompp -f ../mdp/mdprod.mdp \char`\\}\\
+  					 {\tt -c ../mdeq/confout.gro \char`\\}\\
+  					 {\tt -p ../top/W400.top \char`\\}\\
+  					 {\tt -maxwarn 1}
+  	\end{itemize}
+  	\item To enable sampling of LJ particle numbers in the range $N\in [0,450]$,
+  	we need to generate $450$ {\tt .tpr} files (for $N=0$ we do not need to
+  	perform energy calculations {\tt ;-)}). We delete LJ particles from the equilibrated
+  	{\tt W400.gro} structure to generate the $N\in [1,399]$ range of {\tt .gro}
+  	files and then we add LJ particles for the $N\in [401,450]$ range of {\tt
+  	.gro} files. Remember that {\tt GromPy} only needs an equilibrated
+  	{\em starting} structure (one that does not contain particle overlaps). So as
+  	long as we start {\tt GromPy} using a $N\in [1,400]$ structure, it will run fine. For
+  	the higher $N$ range we can just generate structures by adding a new LJ
+  	particle the last particle on top of e.g. the last particle. Before
+  	generating the {\tt .tpr} files, we also need to generate 450 topology
+  	({\tt .top}) files.
+  	\begin{itemize}
+  	  	\item[$\to$] {\tt cd ../gro}
+  	  	\item[$\to$] {\tt ln -sf ../mdprod/confout.gro ./W400.gro}
+  	  	\item[$\to$] {\tt ./GenerateStartingStructures.sh 1 450 W400.gro}
+  	  	\item[$\to$] {\tt cd ../top}
+  	  	\item[$\to$] {\tt ./GenerateTopologies.sh 1 450 W400.top}
+  	  	\item[$\to$] {\tt cd ../tpr}
+  	  	\item[$\to$] {\tt ./GenerateTprs.sh 1 450}
+  	\end{itemize}
+  	\item We are now ready to perform grand-canonical simulations. In this
+  	tutorial we will generate an equation of state in the $\mu VT$ ensemble at
+  	$T=773~\rm K$
+  	\begin{itemize}
+  	  	\item[$\to$] {\tt cd ../}
+  	  	\item[$\to$] {\tt ./RunEos.sh}
+  	\end{itemize}
+\end{itemize}
+
+\section{Analysis}
+\begin{itemize}
+  	\item After performing the simulations, we will analyze the results by
+  	generating block averages of the results. We postprocess the resulting file to obtain the equation of state: the
+  	excess chemical potential as a function of density.
+  	\begin{itemize}
+  	  	\item[$\to$] {\tt DoBlockAveraging.sh}
+  	\end{itemize}
+  	\item Use your favorite plotting tool to check out the results in file
+  	\newline {\tt \char`\"rho\_of\_mu\_with\_units.dat\char`\"}. If all works
+  	well, the results should agree with the $NVT$ equation of state at $T=773~\rm K$.
+\end{itemize}
+
+\section*{Disclaimer}
+This code is NOT error-proof. Please notify us if you run into any problems.
 
 \end{document}

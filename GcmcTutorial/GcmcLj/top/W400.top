@@ -1,0 +1,14 @@
+;
+;cg | MARTINI 2.1
+;
+
+; Force field:
+#include "../itp/martini_v2.1.itp"
+
+[ system ]
+; Name
+water
+
+[ molecules ]
+; Compound	Nmol
+W		400

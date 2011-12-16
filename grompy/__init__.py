@@ -10,8 +10,9 @@ from os import environ
 
 import sys
 
-
-libcname="/lib/libc.so.6"
+libcname="/lib/libc.so.6" # default path, but is different in e.g. Ubuntu 11.10
+if environ.has_key("LIBCPATH"):
+    libcname=environ["LIBCPATH"]
 
 if environ.has_key("GROMPY_DOUBLE"):
     isdouble=True
@@ -43,7 +44,7 @@ if environ.has_key("GROMPY_LIBMD"):
 if environ.has_key("GROMPY_LIBMDRUN"):
     libmdrunname=environ["GROMPY_LIBMDRUN"]
 
-libc = cdll.LoadLibrary(libcname)
+libc     = cdll.LoadLibrary(libcname)
 libmd    = cdll.LoadLibrary(libmdname)
 libgmx   = cdll.LoadLibrary(libgmxname)
 libmdrun = cdll.LoadLibrary(libmdrunname)
