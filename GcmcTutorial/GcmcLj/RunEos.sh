@@ -4,7 +4,7 @@ GMXINSTALLDIR="../../gromacs/gromacs-4.0.7/gromacs-4.0.7-git/install/"
 cd $GMXINSTALLDIR
 GMXINSTALLDIR=$PWD
 cd -
-source ../SourceGromPyEnv.sh
+source ../SourceGromPyEnv.sh $GMXINSTALLDIR
 
 InputParFile="start.dat"
 MuList=`grep -v \# $InputParFile | awk '{print $3}' | sort -n`
