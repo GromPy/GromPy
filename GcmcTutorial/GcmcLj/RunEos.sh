@@ -4,7 +4,6 @@ GMXINSTALLDIR="../../gromacs/gromacs-4.0.7/gromacs-4.0.7-git/install/"
 cd $GMXINSTALLDIR
 GMXINSTALLDIR=$PWD
 cd -
-
 source ../SourceGromPyEnv.sh
 
 InputParFile="start.dat"
