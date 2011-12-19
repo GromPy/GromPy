@@ -17,7 +17,7 @@ GcmcPy=testHybrid.py
 
 for i in $MuList
 do
-	if [ ! -e "mu$i"]; then
+	if [ ! -e "mu$i" ]; then
 		mkdir "mu$i"
 	fi
     Mu=$i
