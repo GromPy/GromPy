@@ -17,6 +17,9 @@ GcmcPy=testHybrid.py
 
 for i in $MuList
 do
+	if [ ! -e "mu$i"]; then
+		mkdir "mu$i"
+	fi
     Mu=$i
     NStart=`grep "mu"$i $InputParFile| awk '{print $2}'`
     echo "Performing MuVT simulation @ Mu=$Mu ..."
