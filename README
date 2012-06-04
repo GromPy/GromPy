@@ -5,7 +5,8 @@
 ------
 
 NOTES:
-* GromPy is compatible to the modified source of GROMACS 4.0.5 (gromacs-4.0.5_HYBRID).
+* GromPy is compatible to the modified source of GROMACS 4.0.5 (gromacs-4.0.5_HYBRID). 
+  Alternatively, a patch for 4.0.7 is available, too.
 * The current version of GromPy is tested on 32-bit (i386,ia32) Ubuntu Linux versions
   9.10 (Karmic Koala) and 11.04 (Natty Narwhal), and on 64-bit (x86_64,amd64) Debian
   Linux version 6.0.2 (Squeeze).
